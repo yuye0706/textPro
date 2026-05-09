@@ -1,0 +1,92 @@
+syntax = "proto3";
+package m_proto;
+import "public.proto";
+
+message BagItem {
+    uint64 bag_id = 1;
+    uint32 item_id = 2;
+    uint32 item_count = 3;
+    uint32 bag_type = 4;
+    uint32 page = 5;
+}
+
+message CS_GetBagList {
+    uint32 bag_type = 1;
+}
+
+message SC_GetBagList {
+    uint32 err_code = 1;
+    uint32 bag_type = 2;
+    repeated BagItem items = 3;
+}
+
+message CS_BagWear {
+    uint64 bag_id = 1;
+    uint32 item_id = 2;
+}
+
+message SC_BagWear {
+    uint32 err_code = 1;
+}
+
+message CS_BagUseItem {
+    uint32 item_id = 1;
+    uint32 item_count = 2;
+}
+
+message SC_BagUseItem {
+    uint32 err_code = 1;
+}
+
+message CS_BagStoreDeposit {
+    uint64 bag_id = 1;
+    uint32 page = 2;
+}
+
+message SC_BagStoreDeposit {
+    uint32 err_code = 1;
+}
+
+message CS_SoulForge {
+    uint64 bag_id = 1;
+}
+
+message SC_SoulForge {
+    uint32 err_code = 1;
+}
+
+message SC_BagItemListNtf {
+    repeated BagItem items = 1;
+}
+
+message SC_BagItemListNtf2 {
+    repeated BagItem items = 1;
+}
+
+message SC_BagIdListNtf {
+    repeated uint64 bag_ids = 1;
+}
+
+message SC_BagIdListNtf2 {
+    repeated uint64 bag_ids = 1;
+}
+
+message SC_BagPageListNtf {
+    repeated uint32 pages = 1;
+}
+
+message SC_BagSingleIdNtf {
+    uint64 bag_id = 1;
+}
+
+message SC_BagPartNtf {
+    uint32 part = 1;
+}
+
+message SC_BagPartNtf2 {
+    uint32 part = 1;
+}
+
+message SC_BagTipNtf {
+    string message = 1;
+}

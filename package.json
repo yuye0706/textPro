@@ -3,5 +3,10 @@
   "uuid": "bedf0a6e-20c5-4ebd-917c-fe5d46cec105",
   "creator": {
     "version": "3.8.8"
+  },
+  "dependencies": {
+    "protobufjs": "^8.0.3",
+    "ws": "^8.20.0",
+    "wss": "^0.0.2"
   }
 }

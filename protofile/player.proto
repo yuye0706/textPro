@@ -1,0 +1,245 @@
+syntax  = "proto3";
+package m_proto;
+import "public.proto";
+
+message PlayerResource
+{
+    uint32      id          = 1;        // 资源id和道具表里面一致
+    uint32      count       = 2;        // 资源数量
+}
+
+// 验证账号是否可进游戏
+message CS_VerifyAccount
+{
+    string  uid                     = 1;        //  平台用户唯一标识
+    string  sessionid               = 2;        //  验证的 session 值
+    string  data                    = 3;        //  json格式
+    uint32  channel_type            = 4;        //  渠道类型（0:app;1~100:微信小游戏;101~200:纵游;201~300:抖音;301~400:qq;401~500:p8h5;501~600:快手;601~700:4399;701~800:oppo）
+    uint32  sys_type                = 5;        //  系统类型(0:android;1:ios)
+}
+
+message SC_VerifyAccount
+{
+    uint32  err_code                = 1;        // 错误码（0:正常;其他:报错）
+}
+
+// 获取是否有角色
+message CS_IsHasRole
+{
+    string  account                 = 1;        // uid
+    uint32  server_id               = 2;        // 服务器id
+}
+
+message SC_IsHasRole
+{
+    uint32  err_code                = 1;        // 错误码（0:正常;其他:报错）
+    bool    is_created              = 2;        // 是否创角了
+}
+
+// 创角
+message CS_CreateRole
+{
+    string roleName                 = 1;        //  角色名称
+    // uint32 sex                      = 2;        //  角色性别 1男 2女
+    string site                     = 3;        //  包名
+    uint32 career                   = 4;        //  职业
+}
+
+message SC_CreateRole
+{
+    uint32 err_code                 = 1;        //  错误码（0:正常;其他:报错）
+    uint64 role_id                  = 2;        //  角色id
+    string roleName                 = 3;        //  角色名称
+}
+
+// 角色进入游戏
+message CS_EnterGame
+{
+    string site                     = 1;        //  包名
+}
+
+message SC_EnterGame
+{
+    uint32 err_code                 = 1;        //  错误码（0:正常;其他:报错）
+    uint32 server_time              = 2;        //  服务器当前时间(秒)
+    uint64 token                    = 3;        //  断线重连要用到
+    uint32 create_time              = 4;        //  玩家创角时间
+    uint32 open_time                = 5;        //  服务器开服时间(秒)
+}
+
+// 重连
+message CS_Reconnect
+{
+    // uint64 role_id                  = 1;        //  角色id
+    uint64 token                    = 2;
+}
+
+message SC_Reconnect
+{
+    uint32 err_code                 = 1;        //  错误码（0:正常;其他:报错）
+}
+
+// ping(掉线了ctime=0)
+message CS_Ping
+{    
+}
+
+message SC_Ping
+{
+    uint32 ctime                    = 1;        //  当前服务器时间
+}
+
+// 检测重名
+message CS_CheckRoleName
+{
+    string  role_name               = 1;        //  角色名
+}
+
+message SC_CheckRoleName
+{
+    bool    has_exist               = 1;        //  角色名是否已经存在
+}
+
+// 改名
+message CS_RenameRole
+{
+    string role_name                = 1;        //  角色名
+}
+
+message SC_RenameRole
+{
+    uint32 err_code                 = 1;        //  错误码（0:正常;其他:报错）
+    string role_name                = 2;        //  角色名
+    uint32 rename_time              = 3;        //  改名时间戳
+}
+
+// 判断是否禁止创角
+message CS_CheckCreateProhibit
+{
+    string  uid                     = 1;        //  平台用户唯一标识
+}
+
+message SC_CheckCreateProhibit
+{
+    bool    prohibit                = 1;        //  是否禁止创角
+}
+
+// 个性签名
+// message CS_10009
+// {
+//     string  content                 = 1;        //  内容
+// }
+
+// message SC_10009
+// {
+//     uint32 err_code                 = 1;        //  错误码（0:正常;其他:报错）
+// }
+
+// 检测是否可重连
+message CS_CheckReconnect
+{
+    uint64  token                       = 1;
+}
+
+message SC_CheckReconnect
+{
+    uint32  err_code                    = 1;        //  错误码（0:正常;其他:报错）
+    bool    can_reconnect               = 2;        //  是否可以重连
+}
+
+// 切换观察模式
+message CS_SwitchObserve
+{
+}
+
+message SC_SwitchObserve
+{
+    uint32  err_code                = 1;        // 错误码（0:正常;其他:报错）
+}
+
+// 获取随机玩家名字
+message CS_RandomRoleName
+{    
+}
+
+message SC_RandomRoleName
+{
+    string role_name                = 1;        //  角色名
+}
+
+// 更改职业
+message CS_ChangeCareer
+{
+    uint32 career                   = 1;        //  职业
+}
+
+message SC_ChangeCareer
+{
+    uint32 err_code                 = 1;        // 错误码
+    uint32 career                   = 2;
+}
+
+//合并10001 10002 10003的一键登录
+message CS_QuickLogin
+{
+    string  account                 = 1;        // uid
+    uint32  server_id               = 2;        // 服务器id
+    string  site                    = 3;        // 包名
+}
+
+message SC_QuickLogin
+{
+    uint32 err_code                 = 1;        // 错误码（0:正常;其他:报错）
+    uint64 role_id                  = 2;        // 角色id
+    string roleName                 = 3;        // 角色名称
+    uint32 server_time              = 10;       // 服务器当前时间(秒)
+    uint64 token                    = 11;       // 断线重连要用到
+    uint32 create_time              = 12;       // 玩家创角时间
+    uint32 open_time                = 13;       // 服务器开服时间(秒)
+}
+
+// 获取玩家信息
+message CS_GetPlayerInfo
+{    
+}
+
+message SC_GetPlayerInfo
+{
+    uint64 role_id                  = 1;        //  角色id
+    string role_name                = 2;        //  角色名
+    uint32 career                   = 10;       //  职业    
+}
+
+// 获取玩家属性
+message CS_GetPlayerAttr
+{    
+}
+
+message SC_GetPlayerAttr
+{
+}
+
+//////////////////////////////////////////////////
+/// 通知消息
+//////////////////////////////////////////////////
+
+
+// 杂项信息
+message SC_MiscNotify
+{
+}
+
+// 时间相关
+message SC_TimeNotify
+{
+    uint32  create_day              = 1;        //  创角天数
+    uint32  open_day                = 2;        //  开服天数
+}
+
+// 被踢下线
+message SC_KickNotify
+{
+    uint32  reason                  = 1;        //  被踢原因（1:在其他地方登录被挤下线；101:长时间没反应被踢; 102:GM; 103:服务器维护）
+    string  prompt                  = 2;        //  提示语（正常没有，被封号可能有）
+}
+
